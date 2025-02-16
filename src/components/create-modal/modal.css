@@ -1,0 +1,44 @@
+.modal-overlay{
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0.0,0.4);
+    overflow: 100vh;
+    width: 100vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 10;
+}
+
+.modal-body{
+    background-color: white;
+    padding: 25px;
+    height: 60%;
+    border-radius: 25px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.modal-body h2{
+    font-size: 32px;
+}
+.modal-body input{
+    padding: 12px;
+    border: 2px solid #ccc;
+    color: rgba(0,0,0,0.9);
+    font-size: 18px;
+    line-height: 25px;
+    border-radius: 13px;
+    width: 100%;
+    margin-bottom: 12px;
+}
+.modal label{
+    color: #242424;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 22px;
+}

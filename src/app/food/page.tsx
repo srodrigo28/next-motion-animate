@@ -1,24 +1,37 @@
 'use client'
 
+import "./food.css"
+
 import { Card } from "@/components/card";
-import { IFoodData } from "@/interfaces/IFoodData"
+import { CreateModal } from "@/components/create-modal";
+import { useFoodData } from "@/hooks/useFoodData";
+import { useState } from "react";
 
 export default function Food(){
-    const data: IFoodData[] = [];
+    const { data } = useFoodData();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpen = (e: any) => {
+        e.preventDefault()
+
+        setIsModalOpen(prev => !prev)
+    }
 
     return(
         <div>
             <h1>Cardapio</h1>
             
             <div className="card-grid">
-                { data.map( item =>
+                { data?.map( item =>
                     <Card 
                         image={item.image} 
                         title={item.title} 
-                        price={item.price} 
+                        price={Number(item.price)} 
                     />
                 )}
             </div>
+            {isModalOpen && <CreateModal closeModal={ handleOpen } />}
+            <button onClick={handleOpen} className=" p-2 bg-green-600 text-white rounded-md">Novo</button>
         </div>
     )
 }
