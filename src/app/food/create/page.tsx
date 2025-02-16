@@ -3,9 +3,10 @@
 import { useFoodDataInsert } from "@/hooks/useFoodDataInsert"
 import { IFoodData } from "@/interfaces/IFoodData"
 import { useState } from "react"
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 
 import "./modal.css"
+import Link from "next/link"
 
 // Criando interface
 interface InputProps{
@@ -24,19 +25,20 @@ const Input = ({ label, value,  updateValue} : InputProps ) => {
     )
 }
 
-interface ModalProps {
-    closeModal() : void
-}
-export function CreateModal( closeModal : ModalProps){
+export default function Create(){
     const [title, setTitle] = useState("")
     const [price, setPrice] = useState("")
     const [image, setImage] = useState("")
-    
-    const router = useRouter()
   
     const { mutate, isSuccess } = useFoodDataInsert()
     
     const submit = () => {
+
+        if(!title || !price || !image){
+            alert("Preencher todos os campos")
+            return
+        }
+
         const foodData: IFoodData = {
             title, price, image
         }
@@ -48,18 +50,21 @@ export function CreateModal( closeModal : ModalProps){
             setTitle("")
             setPrice("")
             setImage("")
-            router.push('/food')
+            
+            redirect('/food')
         }
     }
-
     return(
         <div className="modal-overlay">
             <div className="modal-body">
-                <h2>Cadastre novo Food</h2>
-                <button className="bg-red-500 p-2 rounded-full w-fit px-4 text-white font-bold"
-                    onClick={ () =>  router.push('food') }
-                >X</button>
-
+                <header className="flex justify-between">
+                    <h2>Cadastre novo</h2>
+                    <Link href="/food">
+                        <button className="
+                        bg-red-500 
+                        h-10 w-10 rounded-full text-white font-bold">X</button>
+                    </Link>
+                </header>
                 <form className="input-container">
                     <Input label="titulo" value={title} updateValue={setTitle} />
                     <Input label="preço" value={price} updateValue={setPrice} />
